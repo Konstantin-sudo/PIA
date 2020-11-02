@@ -1,0 +1,79 @@
+/* 1 */
+{
+    "_id" : ObjectId("5ec51aebf37e3342162746b4"),
+    "username" : "admin",
+    "password" : "admin",
+    "type" : "admin"
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("5ec51bd022ce5a1dac925bb6"),
+    "finishedSurveys" : [],
+    "savedSurveys" : [],
+    "finishedTests" : [],
+    "birth_date" : ISODate("2007-08-27T00:00:00.000Z"),
+    "type" : "author",
+    "name" : "Dositej",
+    "surname" : "Milanovic",
+    "username" : "doda",
+    "password" : "DodA123@",
+    "birth_place" : "Beograd",
+    "id" : "2708007710025",
+    "phone" : "0628520775",
+    "mail" : "dositej.m77@gmail.com"
+}
+
+/* 3 */
+{
+    "_id" : ObjectId("5ec51c6f22ce5a1dac925bb8"),
+    "finishedSurveys" : [],
+    "savedSurveys" : [],
+    "finishedTests" : [],
+    "birth_date" : ISODate("1998-03-10T00:00:00.000Z"),
+    "type" : "author",
+    "name" : "Konstantin",
+    "surname" : "Milanovic",
+    "username" : "kole",
+    "password" : "KolE123@",
+    "birth_place" : "Beograd",
+    "id" : "1003998710000",
+    "phone" : "0628820199",
+    "mail" : "kole@gmail.com"
+}
+
+/* 4 */
+{
+    "_id" : ObjectId("5ec52be222ce5a1dac925bf7"),
+    "finishedSurveys" : [],
+    "savedSurveys" : [],
+    "finishedTests" : [],
+    "birth_date" : ISODate("2000-05-19T00:00:00.000Z"),
+    "type" : "client",
+    "name" : "Petar",
+    "surname" : "Peric",
+    "username" : "Pera",
+    "password" : "Pera123@",
+    "birth_place" : "Subotica",
+    "id" : "0000000000000",
+    "phone" : "123123123",
+    "mail" : "pera123@gmail.com"
+}
+
+/* 5 */
+{
+    "_id" : ObjectId("5f087b3cce2ce42644a11d12"),
+    "finishedSurveys" : [],
+    "savedSurveys" : [],
+    "finishedTests" : [],
+    "birth_date" : ISODate("2008-10-14T00:00:00.000Z"),
+    "type" : "client",
+    "name" : "Mirko",
+    "surname" : "Milic",
+    "username" : "mirko",
+    "password" : "mirkO123@",
+    "birth_place" : "Zajecar",
+    "id" : "1410008750021",
+    "phone" : "063352158",
+    "mail" : "mirko@gmail.com"
+}
