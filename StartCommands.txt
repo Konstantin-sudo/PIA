@@ -1,0 +1,43 @@
+//BACKEND
+	npm install express
+	npm install body-parser
+	npm install cors
+	npm install mongoose 
+	npm install -g typescript
+	npm install typescript 
+
+	npm install --save multer
+	npm install @types/multer
+
+	run backend: 	tsc (typescript compiler)
+			npm run serve	
+
+//FRONTEND
+	npm install --save d3
+	npm install --save-dev @types/d3
+
+	run frontend: ng serve --open
+			
+//recaptcha
+	frontend/npm install ng-recaptcha --save
+	site-key: 6Lc2jtYUAAAAAFfxCEV_g4lVEU2b74f6luNRLEo2
+	secret-key: 6Lc2jtYUAAAAANi_aREwWNks6WHPDHwkMBXrDZ3e
+	backend/npm i --save request
+//
+	Angular cli version: 8.3.7
+	Node: 10.16.3
+	npm version 6.9.0
+
+
+let request = new Request({
+                                                                    name:req.body.name,
+                                                                    surname:req.body.surname,
+                                                                    username:req.body.username,
+                                                                    password:req.body.password,
+                                                                    birth_date:req.body.birth_date,
+                                                                    birth_place:req.body.birth_place,
+                                                                    id:req.body.id,
+                                                                    phone:req.body.phone,
+                                                                    mail:req.body.mail,
+                                                                    picture:req.file.path
+                                                                });
