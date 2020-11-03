@@ -1,0 +1,106 @@
+body{
+    font-family: arial;
+    color: #333;
+}
+h1{
+    font-weight: normal;
+    margin: 10px auto;
+    text-align: center;
+    color: rgb(170, 165, 165);
+}
+a {
+    font-weight: 600;
+    color: rgba(0, 143, 252, 0.801);
+}
+p{
+    font-family: arial;
+    color: rgba(0, 143, 252, 0.801);
+}
+
+::placeholder{
+    color: rgb(187, 181, 181);       
+}
+.form:focus{
+    border: 3px solid rgba(116, 191, 248, 0.801);
+}
+
+form{
+    width: 1000px;
+    margin: 20px auto;
+}
+.formInputs{
+    display: block;
+    padding: 8px 16px;
+    font-size: 15px;
+    margin: 10px auto;
+    width: 75%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 3px solid #ccc;
+    outline: none !important;
+    color:  rgb(120, 178, 218);
+    background-color: rgba(233, 231, 231, 0.781);
+}
+
+select:invalid { 
+    color: rgb(187, 181, 181);
+}
+.select{
+    font-size: 17px;
+    margin: 10px auto;
+    height: 30px;
+    width: 200px;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    outline: none !important;
+    color:  rgb(120, 178, 218);
+    background-color: rgba(233, 231, 231, 0.781);
+  }
+#left{
+    float: left;
+    width: 50%;
+}
+#right{
+    float: right;
+    width: 50%;
+}
+
+.questionBtnSelected{
+    padding: 6px 12px;
+    font-size: 15px;
+    margin: 10px auto;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    outline: none !important;
+    color: #333;
+    background-color: cornflowerblue
+}
+.questionBtn{
+    padding: 6px 12px;
+    font-size: 15px;
+    margin: 10px auto;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    outline: none !important;
+    color: #333;
+    background-color: rgba(233, 231, 231, 0.781);
+}
+.questionBtn:hover{
+    background-color: cornflowerblue;
+}
+
+input[type=submit]{
+    font-size: 17px;
+    margin: 10px auto;
+    height: 30px;
+    width: 200px;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    border-radius: 10px;
+    outline: none !important;
+    color:  rgb(120, 178, 218);
+    background-color: rgba(233, 231, 231, 0.781);
+}
+input[type=submit]:hover{
+    border: 3px solid rgba(116, 191, 248, 0.801);
+}

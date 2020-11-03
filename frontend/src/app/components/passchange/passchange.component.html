@@ -1,0 +1,40 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+
+    <h1>Promena lozinke</h1>
+
+    <br>
+    <form style="display: inline-block" #formaLozinka='ngForm' (ngSubmit)="formaLozinka.form.valid && changePass()">
+    
+        <input type="password" placeholder="Stara Lozinka" name="lozinkastara" [(ngModel)]="oldpass" #lozinkastara='ngModel' (click)='msg=""'
+            required>
+        <div *ngIf="formaLozinka.submitted">
+            <p *ngIf="lozinkastara.invalid">Morate uneti staru lozinku</p>
+            <p>{{msg}}</p>
+        </div>
+
+        <input type="password" placeholder="Nova lozinka" name="lozinkanova1" [(ngModel)]="newpass1" #lozinkanova1='ngModel'
+            pattern="^([a-zA-Z].*)(?=.*[0-9])(?=.*[A-Z])(?=.*\W).{7,}$" (click)='msg=""' required>
+        <div *ngIf="formaLozinka.submitted && lozinkanova1.invalid">
+            <p *ngIf="lozinkanova1.errors.pattern">Nije dobar patern</p>
+            <p *ngIf="!lozinkanova1.errors.pattern">Morate uneti lozinku</p>
+        </div>
+        
+        <input type="password" placeholder="Potvrda nove lozinke" name="lozinkanova2" [(ngModel)]="newpass2" #lozinkanova2='ngModel' (click)='msg=""'
+            required>
+        <div *ngIf="formaLozinka.submitted">
+            <p *ngIf="lozinkanova2.invalid">Morate potvrditi novu lozinku</p>
+            <p *ngIf="newpass2!=newpass1 && !lozinkanova2.invalid">Lozinke se ne podudaraju</p>
+        </div>
+        
+        <input type="submit" value="SACUVAJ">
+    
+    </form>
+</body>
+
+</html>

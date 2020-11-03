@@ -1,0 +1,67 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <input type="button" class="back" value="Nazad" (click)="goBack()">
+    <h1>Testovi:</h1>
+    <div>
+        <input type="text" class="search" name="pretraga" placeholder="Pretraga" #pretraga='ngModel'
+            [(ngModel)]="searchPattern">
+        <input type="button" class="btn" value="Pretrazi" (click)="search()">
+    </div>
+    <br>
+    <div>
+        Sortiraj:
+        <select class="select" name="tip" #tip='ngModel' [(ngModel)]="sortDesc.type">
+            <option>Po nazivu</option>
+            <option>Po datumu pocetka</option>
+            <option>Po datumu isteka</option>
+        </select>
+        <select class="select" name="red" #red='ngModel' [(ngModel)]="sortDesc.order">
+            <option>Opadajuce</option>
+            <option>Rastuce</option>
+        </select>
+        <input type="button" class="sort" value="Sortiraj" (click)="sort()">
+        <br>
+        <br>
+    </div>
+    <div *ngIf="!empty">
+        <table align="center" width="100%">
+            <tr>
+                <th>Ime</th>
+                <th>Datum pocetka</th>
+                <th>Datum isteka</th>
+                <th>Vreme</th>
+            </tr>
+            <tr *ngFor="let test of testsToShow">
+
+                <td>
+                    {{test.name}}
+                </td>
+                <td>
+                    {{test.date_begins.toLocaleDateString()}}
+                </td>
+                <td>
+                    {{test.date_ends.toLocaleDateString()}}
+                </td>
+                <td>
+                    {{test.duration.minutes}}:{{test.duration.seconds}}
+                </td>
+                <td>
+                    <div>
+                        <input type="button" class="btn" value="Detalji" (click)="testDetails(test) ">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div *ngIf="empty">
+        Nema trazenih testova
+    </div>
+
+</body>
+
+</html>

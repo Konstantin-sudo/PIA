@@ -1,0 +1,168 @@
+<html>
+
+<head>
+</head>
+
+<body>
+
+    <h1>Kreiranje testa</h1>
+    {{msg}}
+    <div id="center">
+        <form #formaTest='ngForm' (ngSubmit)="formaTest.form.valid && saveTest()">
+            
+            <div id="top">
+                <input type="submit" value="Sacuvaj test" (click)="showMsg(formaTest.form.valid)">
+            </div>
+
+            <div id="left">
+                <p>Naziv testa:</p>
+                <input type="text" class="formInputs" name="naziv" #naziv='ngModel' [(ngModel)]="newTest.name" required>
+
+                <p> Datum pocetka testa:</p>
+                <input type="date" class="formInputs" name="datum_pocetka" #datum_pocetka='ngModel'
+                    [(ngModel)]="newTest.date_begins" required>
+
+                <p>Datum isteka testa:</p>
+                <input type="date" class="formInputs" name="datum_isteka" #datum_isteka='ngModel'
+                    [(ngModel)]="newTest.date_ends" required>
+
+                <p>Osnovne informacije:</p>
+                <textarea name="opis" class="formInputs" #opis='ngModel' [(ngModel)]="newTest.details" rows="4"
+                    cols="30"></textarea>
+
+                <p>Trajanje testa (minuti pa sekunde):</p>
+                <input type="number" class="formInputs" name="vremeMin" #vremeMin='ngModel'
+                    [(ngModel)]="newTest.duration.minutes" required>
+                <input type="number" class="formInputs" name="vremeSek" #vremeSek='ngModel'
+                    [(ngModel)]="newTest.duration.seconds" required>
+            </div>
+
+            <div id="right">
+                <table style="text-align: center;" align="center">
+                    <tr>
+                        <td>
+                            <p>Pitanja:</p>
+                        </td>
+                        <td *ngFor="let question of newTest.questions; let i = index">
+                            <input type="button" value="{{i+1}}" (click)="showQuestion(i)" *ngIf="currQuestionIndex==i"
+                                class="questionBtnSelected">
+                            <input type="button" value="{{i+1}}" (click)="showQuestion(i)" *ngIf="currQuestionIndex!=i"
+                                class="questionBtn">
+                        </td>
+                        <td>
+                            <input type="button" class="questionBtn" value="+" (click)="showAddQuestion()">
+                        </td>
+                        <td>
+                            <input type="button" class="questionBtn" value="-" (click)="deleteQuestion()"
+                                *ngIf="newTest.questions.length!=0">
+                        </td>
+                    </tr>
+                </table>
+
+                <div *ngIf="addQuestionView">
+                    <table align="center">
+                        <tr>
+                            <td>
+                                <p>Tekst pitanja:</p>
+                            </td>
+                            <td>
+                                <textarea type="text" class="formInputs" name="tekstPitanja" #tekstPitanja='ngModel'
+                                    [(ngModel)]="newTest.questions[currQuestionIndex].question" rows="4" cols="30"
+                                    required></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Izaberite pitanje:</p>
+                            </td>
+                            <td>
+                                <select class="formInputs" name="tekstPonudjenihPitanja" #tekstPonudjenihPitanja='ngModel'
+                                    [(ngModel)]="newTest.questions[currQuestionIndex].question">
+                                    <option *ngFor=" let elem of allQuestions">{{elem.questionText}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Tip odgovora:</p>
+                            </td>
+                            <td>
+                                <select name="tipOdgovora" class="formInputs" #tipOdgovora='ngModel'
+                                    [(ngModel)]="newTest.questions[currQuestionIndex].type" required>
+                                    <option>number</option>
+                                    <option>text</option>
+                                    <option>radio</option>
+                                    <option>drop-list</option>
+                                    <option>checkbox</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Broj poena koje pitanje nosi:</p>
+                            </td>
+                            <td>
+                                <input type="number" class="formInputs" name="poeni" #poeni='ngModel'
+                                    [(ngModel)]="newTest.questions[currQuestionIndex].points" required>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table align="center" *ngIf='newTest.questions[currQuestionIndex].type!=""'>
+                        <tr>
+                            <td
+                                *ngIf='newTest.questions[currQuestionIndex].type=="number" || newTest.questions[currQuestionIndex].type=="text"'>
+                                <p>Tacni odgovori:</p>
+                            </td>
+                            <td
+                                *ngIf='newTest.questions[currQuestionIndex].type!="number" && newTest.questions[currQuestionIndex].type!="text" && newTest.questions[currQuestionIndex].type!="" '>
+                                <p>Ponudjeni odgovori</p>
+                            </td>
+                            <td *ngFor="let answer of newTest.questions[currQuestionIndex].answers; let i = index">
+                                <input type="button" value="{{i + 1}}" (click)="showAnswer(i)"
+                                    *ngIf="currAnswerIndex==i" class="questionBtnSelected">
+                                <input type="button" value="{{i + 1}}" (click)="showAnswer(i)"
+                                    *ngIf="currAnswerIndex!=i" class="questionBtn">
+                            </td>
+                            <td>
+                                <input type="button" class="questionBtn" value="+" (click)="showAddAnswer()"> 
+                            </td>
+                            <td>
+                                <input type="button" class="questionBtn" value="-" (click)="deleteAnswer()" *ngIf="newTest.questions[currQuestionIndex].answers.length!=0">
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table align="center" *ngIf="addAnswerView">
+                        <tr>
+                            <td>
+                                <p>Tekst odgovora:</p>
+                            </td>
+                            <td>
+                                <textarea type="text" class="formInputs" name="odg" #odg='ngModel'
+                                    [(ngModel)]="newTest.questions[currQuestionIndex].answers[currAnswerIndex].answer"
+                                    rows="4" cols="30" required></textarea>
+                            </td>
+                        </tr>
+                        <tr
+                            *ngIf='newTest.questions[currQuestionIndex].type=="radio" || newTest.questions[currQuestionIndex].type=="drop-list" || newTest.questions[currQuestionIndex].type=="checkbox"'>
+                            <td>
+                                <p>Da li je odgovor tacan odgovor:</p>
+                            </td>
+                            <td>
+                                <input type="checkbox" class="formInputs" name="tacan" #tacan='ngModel'
+                                    [(ngModel)]="newTest.questions[currQuestionIndex].answers[currAnswerIndex].isCorrect">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </form>
+
+        <!--<div *ngIf="!formaTest.form.valid" align="center">
+            {{showMsg()}}
+        </div>-->
+    </div>
+</body>
+
+</html>

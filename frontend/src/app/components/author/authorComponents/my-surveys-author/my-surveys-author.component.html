@@ -1,0 +1,174 @@
+<html>
+
+<head>
+</head>
+
+<body>
+    <div>
+        <input type="button" class="back" value="NAZAD" (click)="goBack()">
+    </div>
+    <div *ngIf="!resultsView && !reportView">
+        <h1>Moje ankete</h1>
+        <div>
+            <input type="text" class="search" name="pretraga" placeholder="Pretraga" #pretraga='ngModel'
+                [(ngModel)]="searchPattern">
+            <input type="button" class="btn" value="Pretrazi" (click)="search()">
+        </div>
+        <br>
+        <table *ngIf="!empty" align="center">
+            <th>Naziv ankete</th>
+            <tr *ngFor="let survey of surveysToShow">
+                <td>
+                    {{survey.name}}
+                </td>
+                <td>
+                    <input type="button" class="btn" value="Obrisi" (click)="deleteSurvey(survey)">
+                </td>
+                <td>
+                    <input type="button" class="btn" value="Rezultati" (click)="showResults(survey)">
+                </td>
+                <td>
+                    <input type="button" class="btn" value="Izvestaj" (click)="showReport(survey)">
+                </td>
+            </tr>
+        </table>
+        <p *ngIf="empty">Nema trazenih anketa</p>
+    </div>
+
+    <div *ngIf="resultsView">
+        <h1>
+            Pregled rezultata ankete: {{currSurvey.name}}
+        </h1>
+
+        <hr width="50%" size="2" color="black" align="center">
+
+        <div *ngFor="let result of results " align="center">
+            <div *ngIf='currSurvey.type=="Personalizovana"'>
+                <p>Ime ispitanika: {{result.name}} {{result.surname}}</p>
+            </div>
+            <table>
+                <caption></caption>
+                <tr *ngFor="let question of currSurvey.questions; let i = index">
+                    <td>
+                        <div align="center"><b>{{ i + 1}}.{{question.question}}</b></div>
+                        <br>
+                        
+                        <div *ngIf='question.type.name=="number"'>
+                            <table align="center">
+                                <tr *ngFor="let numAnswer of result.answers[i]; let m = index">
+                                    <td>
+                                        {{m+1}}. <input type="number" class="inputs" name="{{i+m}}" #{{i+m}}='ngModel'
+                                            [(ngModel)]="result.answers[i][m]" disabled>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div *ngIf='question.type.name=="text"'>
+                            <table align="center">
+                                <tr *ngFor="let txtAnswer of result.answers[i]; let n = index">
+                                    <td>
+                                        {{n+1}}. <input class="inputs" type="text" name="{{i+n}}" #{{i+n}}='ngModel'
+                                            [(ngModel)]="result.answers[i][n]" disabled>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div *ngIf='question.type.name=="text-area"'>
+                            <textarea class="inputs" rows="4" cols="30" name="txtArea" #txtArea='ngModel'
+                                [(ngModel)]="result.answers[i][0]" disabled></textarea>
+                        </div>
+                        <div *ngIf='question.type.name=="radio"'>
+                            <table align="center">
+                                <tr *ngFor="let radioAnswer of question.answers; let j = index">
+                                    <td>
+                                        <input type="radio" class="inputs" name="{{question.question}}" value="{{radioAnswer}}"
+                                            #{{question.question}}='ngModel' [(ngModel)]="result.answers[i][0]"
+                                            disabled>
+                                    </td>
+                                    <td>
+                                        {{radioAnswer}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div *ngIf='question.type.name=="drop-list"'>
+                            <table align="center">
+                                <tr>
+                                    <td>
+                                        <select name="{{question.question}}" class="inputs" #{{question.question}}='ngModel'
+                                            [(ngModel)]="result.answers[i][0]" disabled>
+                                            <option *ngFor="let d of question.answers">{{d}}</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div *ngIf='question.type.name=="checkbox"'>
+                            <table align="center">
+                                <tr *ngFor="let checkboxAnswer of question.answers; let k = index">
+                                    <td>
+                                        <input type="checkbox" class="inputs" name="checkboxOdg" value="{{checkboxAnswer}}"
+                                            #checkboxOdg='ngModel' [(ngModel)]="result.answers[i][k]" disabled>
+                                    </td>
+                                    <td>
+                                        {{checkboxAnswer}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <br>
+            </table>
+            <hr width="50%" size="2" color="black" align="center">
+
+        </div>
+    </div>
+
+    <div *ngIf="reportView">
+        <h1>Izvestaj</h1>
+        <table align="center">
+            <div *ngFor="let question of currSurvey.questions; let i = index ">
+                <tr align="center">
+                    <td colspan="2">
+                        <b>{{i+1}}.{{question.question}}</b>
+                    </td>
+                </tr>
+                <div *ngFor="let questionReport of currSurveyReport[i].questionReport">
+                    <tr>
+                        <td>
+                            Odgovor:
+                        </td>
+                        <td>
+                            <p>{{questionReport.answer}} </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Broj pojavljivanja odgovora:
+                        </td>
+                        <td>
+                            <p>{{questionReport.appearanceCnt}} </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Procenat pojavljivanja odgovora:
+                        </td>
+                        <td>
+                            <p>{{questionReport.appearancePercentage}} % </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <hr>
+                    </tr>
+                </div>
+                <br>
+                <br>
+            </div>
+
+        </table>
+    </div>
+</body>
+
+</html>

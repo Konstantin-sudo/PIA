@@ -1,0 +1,74 @@
+<html>
+
+<head>
+</head>
+
+<body>
+    <div>
+        <input type="button" class="back" value="NAZAD" (click)="goBack()">
+    </div>
+
+    <div *ngIf="!resultsView" align="center">
+        <h1>Moji Testovi:</h1>
+        <div>
+            <input type="text" class="search" name="pretraga" placeholder="Pretraga" #pretraga='ngModel'
+                [(ngModel)]="searchPattern">
+            <input type="button" class="btn" value="Pretrazi" (click)="search()">
+        </div>
+        <br>
+        <table *ngIf="!empty">
+            <th>Naziv testa</th>
+            <tr *ngFor="let test of testsToShow">
+                <td>
+                    <p> {{test.name}}</p>
+                </td>
+                <td>
+                    <input type="button" class="btn" value="Obrisi" (click)="deleteTest(test)">
+                </td>
+                <td>
+                    <input type="button" class="btn" value="Rezultati" (click)="showResults(test)">
+                </td>
+            </tr>
+        </table>
+        <p *ngIf="empty">Nema trazenih testova</p>
+    </div>
+
+    <div id="rez" *ngIf="resultsView" align="center">
+        <div>
+            <h1>{{currTest.name}}</h1>
+        </div>
+        <br>
+        <br>
+
+        <br>
+        <table width="100%" align="center" *ngIf="!resultsEmpty">
+            <caption style="text-align: center;">
+                <b>Rezultati</b>
+                <br>
+                <hr width="70%">
+                <br>
+            </caption>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Poeni</th>
+            <tr *ngFor="let result of currTest.results" style="text-align: center;">
+                <td>
+                    <p>{{result.name}}</p>
+                </td>
+                <td>
+                    <p>{{result.surname}}</p>
+                </td>
+                <td>
+                    <p> {{result.pointsSum}} / {{currTest.maxPoints}}</p>
+                </td>
+            </tr>
+        </table>
+        <p *ngIf="resultsEmpty">Trenutno nema rezultata <br><br></p>
+    </div>
+    <br><br>
+    <b *ngIf="resultsView">Statistika:</b><br>
+    <svg id="svg" class="svg"></svg>
+    <br>
+</body>
+
+</html>

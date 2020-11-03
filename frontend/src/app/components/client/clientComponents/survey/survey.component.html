@@ -1,0 +1,214 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+
+    <h1>{{survey.name}}</h1>
+
+    <div *ngIf="!end && !happyEnd" style="display: inline-block;">
+        <div align="center">
+            <div>
+                <table>
+                    <tr>
+                        <td>
+                            <input type="button" class="btn" value="Predaj odgovore" (click)="finish()">
+                        </td>
+                        <td>
+                            <input type="button" class="btn" value="Sacuvaj odgovore" (click)="save()">
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                {{msg}}
+            </div>
+            <br>
+            <table>
+                <tr>
+                    <td *ngIf="currPage != 1">
+                        <input type="button" class="nextBtn"  value=" < " (click)="prevPage()">
+                    </td>
+                    <td>
+                        <p>{{currPage}}</p>
+                    </td>
+                    <td *ngIf="currPage != maxPageNumber">
+                        <input type="button" class="nextBtn" value=" > " (click)="nextPage()">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <br>
+        <table align="center">
+            <tr *ngFor="let question of questionsToShow; let i = index">
+                <td>
+                    <div *ngIf="question.isRequired"><b>{{lowIndex + i + 1}}.{{question.question}} *</b></div>
+                    <div *ngIf="!question.isRequired"><b>{{lowIndex + i + 1}}.{{question.question}}</b></div>
+                    <br>
+                    <div>Ogovor:</div><br>
+                    <div *ngIf='question.type.name=="number"'>
+                        <table align="center">
+                            <tr *ngFor="let numAnswer of answersIteration[lowIndex + i]; let m = index">
+                                <td>
+                                    {{m+1}}.<input type="number" class="inputs" name="{{lowIndex+i+m}}" #{{lowIndex+i+m}}='ngModel'
+                                        [(ngModel)]="answers[lowIndex+i][m]">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div *ngIf='question.type.name=="text"'>
+                        <table align="center">
+                            <tr *ngFor="let txtAnswer of answersIteration[lowIndex + i]; let n = index">
+                                <td>
+                                    {{n+1}}.<input type="text" class="inputs" name="{{lowIndex+i+n}}" #{{lowIndex+i+n}}='ngModel'
+                                        [(ngModel)]="answers[lowIndex+i][n]">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div *ngIf='question.type.name=="text-area"'>
+                        <textarea rows="4" cols="30" class="inputs" name="txtArea" #txtArea='ngModel'
+                            [(ngModel)]="answers[lowIndex + i][0]"></textarea>
+                    </div>
+                    <div *ngIf='question.type.name=="radio"'>
+                        <table align="center">
+                            <tr *ngFor="let radioAnswer of question.answers; let j = index">
+                                <td>
+                                    <input type="radio" class="inputs" name="{{question.question}}" value="{{radioAnswer}}"
+                                        #{{question.question}}='ngModel' [(ngModel)]="answers[lowIndex + i][0]">
+                                </td>
+                                <td>
+                                    {{radioAnswer}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div *ngIf='question.type.name=="drop-list"'>
+                        <table align="center">
+                            <tr>
+                                <td>
+                                    <select name="{{question.question}}" class="inputs" #{{question.question}}='ngModel'
+                                        [(ngModel)]="answers[lowIndex + i][0]">
+                                        <option *ngFor="let d of question.answers">{{d}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div *ngIf='question.type.name=="checkbox"'>
+                        <table align="center">
+                            <tr *ngFor="let checkboxAnswer of question.answers; let k = index">
+                                <td>
+                                    <input type="checkbox" class="inputs" name="checkboxOdg" value="{{checkboxAnswer}}"
+                                        #checkboxOdg='ngModel' [(ngModel)]="answers[lowIndex + i][k]">
+                                </td>
+                                <td>
+                                    {{checkboxAnswer}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br>
+                    <br>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+
+    <div *ngIf="end && !happyEnd" style="display: inline-block;">
+        Ogovoreno na: {{answerCnt}} / {{survey.questions.length}} pitanja <br><br>
+        <input type="button" class="btnEnd" value="Zavrsi" (click)="endSurvey()">
+        <input type="button" class="btnEnd" value="Sacuvaj" (click)="save()">
+        <input type="button" class="btnEnd" value="Nazad na popunjavanje" (click)="end=false">
+        <br>
+        <br>
+        <table align="center">
+            <caption><b>Pregled vasih rezultata</b></caption>
+            <br>
+            <tr *ngFor="let question of survey.questions; let i = index">
+                <td>
+                    <div>{{i + 1}}.{{question.question}}</div>
+                    <br>
+                    <div>Ogovor:</div><br>
+                    <div *ngIf='question.type.name=="number"'>
+                        <table align="center">
+                            <tr *ngFor="let numAnswer of answersIteration[i]; let m = index">
+                                <td>
+                                    {{m+1}}. <input type="number" class="inputs" name="{{i+m}}" #{{i+m}}='ngModel'
+                                        [(ngModel)]="answers[i][m]" disabled>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div *ngIf='question.type.name=="text"'>
+                        <table align="center">
+                            <tr *ngFor="let txtAnswer of answersIteration[i]; let n = index">
+                                <td>
+                                    {{n+1}}. <input type="text" class="inputs" name="{{i+n}}" #{{i+n}}='ngModel'
+                                        [(ngModel)]="answers[i][n]" disabled>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div *ngIf='question.type.name=="text-area"'>
+                        <textarea rows="4" cols="30" name="txtArea" class="inputs" #txtArea='ngModel' [(ngModel)]="answers[i][0]"
+                            disabled></textarea>
+                    </div>
+                    <div *ngIf='question.type.name=="radio"'>
+                        <table align="center">
+                            <tr *ngFor="let radioAnswer of question.answers; let j = index">
+                                <td>
+                                    <input type="radio" class="inputs" name="{{question.question}}" value="{{radioAnswer}}"
+                                        #{{question.question}}='ngModel' [(ngModel)]="answers[i][0]" disabled>
+                                </td>
+                                <td>
+                                    {{radioAnswer}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div *ngIf='question.type.name=="drop-list"'>
+                        <table align="center">
+                            <tr>
+                                <td>
+                                    <select name="{{question.question}}" class="inputs" #{{question.question}}='ngModel'
+                                        [(ngModel)]="answers[i][0]" disabled>
+                                        <option *ngFor="let d of question.answers">{{d}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div *ngIf='question.type.name=="checkbox"'>
+                        <table align="center">
+                            <tr *ngFor="let checkboxAnswer of question.answers; let k = index">
+                                <td>
+                                    <input type="checkbox" class="inputs" name="checkboxOdg" value="{{checkboxAnswer}}"
+                                        #checkboxOdg='ngModel' [(ngModel)]="answers[i][k]" disabled>
+                                </td>
+                                <td>
+                                    {{checkboxAnswer}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br>
+                    <br>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div *ngIf="happyEnd">
+        {{msg}} <br>
+        <a routerLink='../../' (click)="ngOnDestroy()">Povratak na pocetnu stranicu</a>
+    </div>
+</body>
+
+</html>

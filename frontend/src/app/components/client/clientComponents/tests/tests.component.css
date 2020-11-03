@@ -1,0 +1,96 @@
+
+body{
+    font-family: arial;
+    color: #333;
+}
+h1{
+    font-weight: normal;
+    margin: 20px auto;
+    text-align: center;
+    color: #333;
+}
+
+  .back{
+    float: left;
+    padding: 8px 16px;
+    font-size: 17px;
+    margin: 10px auto;
+    width: 100px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 3px solid #ccc;
+    outline: none !important;
+    color:  #333;
+    background-color: rgba(233, 231, 231, 0.781);
+  }
+  .back:hover{
+    border: 3px solid rgba(116, 191, 248, 0.801);
+    cursor: pointer;
+}
+
+.search{
+    background-color: white;
+    background-image: url('../../../../../searchicon2.png');
+    background-position: 2px 2px;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    padding-left: 30px;
+
+    font-size: 20px;
+    margin: 10px auto;
+    width: 300px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 3px solid #ccc;
+    outline: none !important;
+    color:  #333;
+    background-color: white;
+  }
+  .search:hover{
+    border: 3px solid rgba(116, 191, 248, 0.801);
+}
+
+  .btn{
+    font-size: 17px;
+    margin: 10px auto;
+    height: 30px;
+    width: 100px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 3px solid #ccc;
+    outline: none !important;
+    color:  #333;
+    background-color: rgba(233, 231, 231, 0.781);
+  }
+  .btn:hover{
+    border: 3px solid rgba(116, 191, 248, 0.801);
+    cursor: pointer;
+}
+
+  .select{
+    font-size: 17px;
+    margin: 10px auto;
+    height: 30px;
+    width: 200px;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    outline: none !important;
+    color:  #333;
+    background-color: rgba(233, 231, 231, 0.781);
+  }
+
+  .sort{
+    font-size: 17px;
+    margin: 10px auto;
+    height: 30px;
+    width: 100px;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    outline: none !important;
+    color:  #333;
+    background-color: rgba(233, 231, 231, 0.781);
+  }
+    .sort:hover{
+        border: 3px solid rgba(116, 191, 248, 0.801);
+        cursor: pointer;
+    }

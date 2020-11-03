@@ -1,0 +1,304 @@
+<html>
+    <head></head>
+    <body>
+
+        <div *ngIf="init">
+            <div *ngIf="!happyEnd && (minutesLeft>0 || secondsLeft>10)"><p>Vreme: {{minutesLeft}}:{{secondsLeft}}</p></div>
+            <div *ngIf="!happyEnd && (minutesLeft==0 && secondsLeft<=10)" style="color: red;">Vreme: {{minutesLeft}}:{{secondsLeft}}
+            </div>
+            <div *ngIf="!happyEnd" style="color: red;">{{msg}}</div>
+        
+            <div *ngIf="!end && !happyEnd">
+                <table align="center">
+                    <tr>
+                        <td>
+                            <input type="button" class="btn" value="Predaj odgovore" (click)="finish()">
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <br>
+        
+                <table align="center">
+                    <tr>
+                        <td>
+                            <p>Pitanja:</p>
+                        </td>
+                        <td *ngFor="let question of questions; let i = index">
+                            <div *ngIf="i!=currIndex">
+                                <input type="button" class="questionBtn" value="{{i+1}}" (click)="showQuestion(i)">
+                            </div>
+                            <div *ngIf="i==currIndex">
+                                <input type="button" value="{{i+1}}" (click)="showQuestion(i)"
+                                    class="questionBtnSelected" >
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <br>
+                <br>
+        
+                <table align="center">
+                    <tr>
+                        <td>
+                            <div>
+                                <b>{{currQuestion.question}}</b>
+                            </div>
+                            <br>
+                            <div *ngIf='currQuestion.type=="number"'>
+                                <table align="center">
+                                    <tr>
+                                        <td>
+                                            <input type="number" class="inputs" name="num" #num='ngModel'
+                                                [(ngModel)]="answersHtml[currIndex][0]">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div *ngIf='currQuestion.type=="text"'>
+                                <table align="center">
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="inputs" name="txt" #txt='ngModel'
+                                                [(ngModel)]="answersHtml[currIndex][0]">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div *ngIf='currQuestion.type=="radio"'>
+                                <table align="center">
+                                    <tr *ngFor="let radioAnswer of currQuestion.answers; let j = index">
+                                        <td>
+                                            <input type="radio" class="inputs" name="dugme" value="{{radioAnswer.answer}}" #dugme='ngModel'
+                                                [(ngModel)]="answersHtml[currIndex][0]">
+                                        </td>
+                                        <td>
+                                            {{radioAnswer.answer}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div *ngIf='currQuestion.type=="drop-list"'>
+                                <table align="center">
+                                    <tr>
+                                        <td>
+                                            <select name="lista" class="inputs" #lista='ngModel' [(ngModel)]="answersHtml[currIndex][0]">
+                                                <option *ngFor="let d of currQuestion.answers">{{d.answer}}</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div *ngIf='currQuestion.type=="checkbox"'>
+                                <table align="center">
+                                    <tr *ngFor="let checkboxAnswer of currQuestion.answers; let k = index">
+                                        <td>
+                                            <input type="checkbox" class="inputs" name="checkboxOdg" value="{{checkboxAnswer.answer}}"
+                                                #checkboxOdg='ngModel' [(ngModel)]="answersHtml[currIndex][k]">
+                                        </td>
+                                        <td>
+                                            {{checkboxAnswer.answer}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br>
+                            <br>
+                            <div>
+                                <table align="center">
+                                    <tr>
+                                        <td *ngIf="currIndex!=(questions.length-1)">
+                                            <input type="button" class="btn" value="Sledece"
+                                                (click)="showQuestion((currIndex+1)%(questions.length))">
+                                        </td>
+                                        <td *ngIf="currIndex==(questions.length-1)">
+                                            <input type="button" class="btn" value="Predaj odgovore" (click)="finish()">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+        
+        
+            <div *ngIf="end && !happyEnd" style="display: inline-block;">
+                <input type="button" class="btn" value="Zavrsi" (click)="endTest()">
+                <input type="button" class="btn" value="Nazad na popunjavanje" (click)="end=false">
+                <br>
+                <br>
+                Ogovoreno na: {{answerCnt}} / {{questions.length}} pitanja
+                <br>
+                <br>
+                <br>
+                <table>
+                    <caption><b>Pregled vasih odgovora</b></caption>
+                    <br>
+                    <tr *ngFor="let question of questions; let i = index">
+                        <td>
+                            <div>{{ i + 1}}.{{question.question}}</div>
+                            <br>
+                            <div>Ogovor:</div><br>
+                            <div *ngIf='question.type=="number"'>
+                                <table align="center">
+                                    <tr>
+                                        <td>
+                                            <input type="number" class="inputs" name="br" #br='ngModel' [(ngModel)]="answersHtml[i][0]"
+                                                disabled>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div *ngIf='question.type=="text"'>
+                                <table align="center">
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="inputs" name="teskst" #teskst='ngModel' [(ngModel)]="answersHtml[i][0]"
+                                                disabled>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div *ngIf='question.type=="radio"'>
+                                <table align="center">
+                                    <tr *ngFor="let radioAnswer of question.answers; let j = index">
+                                        <td>
+                                            <input type="radio" class="inputs" name="{{question.question}}" value="{{radioAnswer.answer}}"
+                                                #{{question.question}}='ngModel' [(ngModel)]="answersHtml[i][0]" disabled>
+                                        </td>
+                                        <td>
+                                            {{radioAnswer.answer}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div *ngIf='question.type=="drop-list"'>
+                                <table align="center">
+                                    <tr>
+                                        <td>
+                                            <select name="{{question.question}}" class="inputs" #{{question.question}}='ngModel'
+                                                [(ngModel)]="answersHtml[i][0]" disabled>
+                                                <option *ngFor="let d of question.answers">{{d.answer}}</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div *ngIf='question.type=="checkbox"'>
+                                <table align="center">
+                                    <tr *ngFor="let checkboxAnswer of question.answers; let k = index">
+                                        <td>
+                                            <input type="checkbox" class="inputs" name="checkboxOdg" value="{{checkboxAnswer.answer}}"
+                                                #checkboxOdg='ngModel' [(ngModel)]="answersHtml[i][k]" disabled>
+                                        </td>
+                                        <td>
+                                            {{checkboxAnswer.answer}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br>
+                            <br>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        
+            <div *ngIf="timesUp && happyEnd" style="display: inline-block;">
+                Vreme je isteklo.<br>
+                Test je zavrsen.
+                <br>
+                <a routerLink='../../' (click)="clearStorage()">Povratak na pocetnu stranicu</a>
+                <br>
+                <br>
+                Ogovoreno na: {{answerCnt}} / {{questions.length}} pitanja
+                <br>
+                <br>
+                <br>
+                <table>
+                    <caption><b>Pregled vasih odgovora</b></caption>
+                    <br>
+                    <tr *ngFor="let question of questions; let i = index">
+                        <td>
+                            <div>{{ i + 1}}.{{question.question}}</div>
+                            <br>
+                            <div>Ogovor:</div><br>
+                            <div *ngIf='question.type=="number"'>
+                                <table align="center">
+                                    <tr>
+                                        <td>
+                                            <input type="number" class="inputs" name="br" #br='ngModel' [(ngModel)]="answersHtml[i][0]"
+                                                disabled>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div *ngIf='question.type=="text"'>
+                                <table align="center">
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="inputs" name="teskst" #teskst='ngModel' [(ngModel)]="answersHtml[i][0]"
+                                                disabled>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div *ngIf='question.type=="radio"'>
+                                <table align="center">
+                                    <tr *ngFor="let radioAnswer of question.answers; let j = index">
+                                        <td>
+                                            <input type="radio" class="inputs" name="{{question.question}}" value="{{radioAnswer.answer}}"
+                                                #{{question.question}}='ngModel' [(ngModel)]="answersHtml[i][0]" disabled>
+                                        </td>
+                                        <td>
+                                            {{radioAnswer.answer}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div *ngIf='question.type=="drop-list"'>
+                                <table align="center">
+                                    <tr>
+                                        <td>
+                                            <select name="{{question.question}}" class="inputs" #{{question.question}}='ngModel'
+                                                [(ngModel)]="answersHtml[i][0]" disabled>
+                                                <option *ngFor="let d of question.answers">{{d.answer}}</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div *ngIf='question.type=="checkbox"'>
+                                <table align="center">
+                                    <tr *ngFor="let checkboxAnswer of question.answers; let k = index">
+                                        <td>
+                                            <input type="checkbox" class="inputs" name="checkboxOdg" value="{{checkboxAnswer.answer}}"
+                                                #checkboxOdg='ngModel' [(ngModel)]="answersHtml[i][k]" disabled>
+                                        </td>
+                                        <td>
+                                            {{checkboxAnswer.answer}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br>
+                            <br>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        
+            <div *ngIf="!timesUp && happyEnd" style="display: inline-block;">
+                Test je zavrsen.<br>
+                <a routerLink='../../' (click)="clearStorage()">Povratak na pocetnu stranicu</a>
+        
+            </div>
+        </div>
+    </body>
+</html>

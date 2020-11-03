@@ -1,0 +1,99 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Login Form</title>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+</head>
+
+<body>
+    <h1>Registracija</h1>
+
+    <form style="display: inline-block" #FormaReg='ngForm' id="form" (ngSubmit)="FormaReg.form.valid && register()" enctype="multipart/form-data">
+
+        <div id="left">
+            <input type="text" placeholder="Ime" name="ime" [(ngModel)]="user.name" #ime='ngModel' (click)='message=""'
+                required>
+            <p *ngIf="FormaReg.submitted && ime.invalid">
+                Morate uneti ime
+            </p>
+
+            <input type="text" placeholder="Prezime" name="prezime" [(ngModel)]="user.surname" #prezime='ngModel'
+                (click)='message=""' required>
+            <p *ngIf="FormaReg.submitted && prezime.invalid">
+                Morate uneti prezime
+            </p>
+
+            <input type="text" placeholder="Korisnicko ime" name="korime" [(ngModel)]="user.username" #korime='ngModel'
+                (click)='message=""' required>
+            <p *ngIf="FormaReg.submitted && korime.invalid">
+                Morate uneti korisnicko ime
+            </p>
+
+            <input type="password" placeholder="Lozinka" name="lozinka" [(ngModel)]="user.password" #lozinka='ngModel'
+                pattern="^([a-zA-Z].*)(?=.*[0-9])(?=.*[A-Z])(?=.*\W).{7,}$" (click)='message=""' required>
+            <p *ngIf="FormaReg.submitted && lozinka.invalid">
+                <span *ngIf="lozinka.errors.pattern">Nije dobar patern</span>
+                <span *ngIf="!lozinka.errors.pattern">Morate uneti lozinku</span>
+            </p>
+
+            <input type="password" placeholder="Potvrda lozinke" name="potvrda" id="conf" [(ngModel)]="passwordconf"
+                #potvrda='ngModel' (click)='message=""' required>
+            <p *ngIf="FormaReg.submitted">
+                <span *ngIf='passwordconf==""'>Morate potvrditi lozinku</span>
+                <span *ngIf='!checkPass() && passwordconf!=""'> Lozinke se ne podudaraju</span>
+            </p>
+
+            <input type="date" name="datum_rodjenja" [(ngModel)]="user.birth_date" #datum_rodjenja='ngModel'
+                (click)='message=""' required>
+            <p *ngIf="FormaReg.submitted && datum_rodjenja.invalid">
+                Morate uneti datum rodjenja
+            </p>
+            
+            <input type="text" placeholder="Mesto rodjenja" name="mesto_rodjenja" [(ngModel)]="user.birth_place"
+                #mesto_rodjenja='ngModel' (click)='message=""' required>
+            <p *ngIf="FormaReg.submitted && mesto_rodjenja.invalid">
+                Morate uneti mesto rodjenja
+            </p>
+        </div>
+
+        <div id="right">
+
+
+            <input type="text" placeholder="JMBG" name="jmbg" [(ngModel)]="user.id" #jmbg='ngModel'
+                pattern="^([0-2]\d|3[0,1])(0\d|1[0,1,2])(\d{9})$" (click)='message=""' required>
+            <p *ngIf="FormaReg.submitted && jmbg.invalid">
+                <span *ngIf="!jmbg.errors.pattern">Morate uneti JMBG</span>
+                <span *ngIf="jmbg.errors.pattern">Pogresan format</span>
+            </p>
+
+            <input type="string" placeholder="Kontakt telefon" name="telefon" [(ngModel)]="user.phone"
+                #telefon='ngModel' pattern="^(\d{9}\d?\d?$)|(\+381\d{8}\d?\d?$)" (click)='message=""' required>
+            <p *ngIf="FormaReg.submitted && telefon.invalid">
+                Morate uneti kontakt telefon
+            </p>
+
+            <input type="email" placeholder="E-mail" name="mejl" [(ngModel)]="user.mail" #mejl='ngModel'
+                (click)='message=""' required>
+            <p *ngIf="FormaReg.submitted && mejl.invalid">
+                Morate uneti e-mail
+            </p>
+
+            <input type="file" id="myfile" name="picture" (change)="handleFileInput($event.target.files)">
+
+            <div class="recaptcha">
+                <re-captcha (resolved)="resolved($event)" siteKey="6Lc2jtYUAAAAAFfxCEV_g4lVEU2b74f6luNRLEo2">
+                </re-captcha>
+            </div>
+        </div>
+
+        <input id="submitBtn" type="submit" value="SNIMI">
+
+
+        <p>{{message}}</p>
+        <br>
+        <a routerLink="/login">Povratak na stranicu za logovanje</a>
+    </form>
+</body>
+
+</html>

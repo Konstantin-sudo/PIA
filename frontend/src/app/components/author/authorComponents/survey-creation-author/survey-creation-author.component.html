@@ -1,0 +1,175 @@
+<html>
+
+<head>
+</head>
+
+<body>
+
+    <h1>Kreiranje ankete</h1>
+    <div>{{msg}}</div>
+    <div id="center">
+        <form #formaAnketa='ngForm' (ngSubmit)="formaAnketa.form.valid && saveSurvey()">
+            <div id="top">
+                <input type="submit" value="Sacuvaj anketu" (click)="showMsg(formaAnketa.form.valid)">
+            </div>
+
+            <div id="left">
+                <p>Naziv ankete:</p>
+                <input type="text" class="formInputs" placeholder="Naziv ankete" name="naziv" #naziv='ngModel'
+                    [(ngModel)]="newSurvey.name" required>
+                <p>Datum pocetka ankete:</p>
+                <input type="date" class="formInputs" name="datum_pocetka" #datum_pocetka='ngModel'
+                    [(ngModel)]="newSurvey.date_begins" required>
+                <p>Datum isteka ankete:</p>
+                <input type="date" class="formInputs" name="datum_isteka" #datum_isteka='ngModel'
+                    [(ngModel)]="newSurvey.date_ends" required>
+                <p>Osnovne informacije:</p>
+                <textarea name="opis" class="formInputs" placeholder="Osnovne informacije" #opis='ngModel'
+                    [(ngModel)]="newSurvey.details" rows="4" cols="30"></textarea>
+                <p>Tip ankete:</p>
+                <select name="tip" class="select" #tip='ngModel' [(ngModel)]="newSurvey.type" required>
+                    <option value="" disabled selected hidden>Tip</option>
+                    <option>Personalizovana</option>
+                    <option>Anonimna</option>
+                </select>
+                <p>Broj stranica za prikaz</p>
+                <input type="number" class="formInputs" placeholder="Broj stranica za prikaz" name="broj"
+                    #broj='ngModel' [(ngModel)]="newSurvey.pageViewCnt">
+            </div>
+
+            <div id="right">
+                <div align="center">
+                    <table style="text-align: center;">
+                        <tr>
+                            <td>
+                                <p>Pitanja:</p>
+                            </td>
+                            <td *ngFor="let question of newSurvey.questions; let i = index">
+                                <input type="button" value="{{i+1}}" (click)="showQuestion(i)"
+                                    *ngIf="currQuestionIndex==i" class="questionBtnSelected">
+                                <input type="button" value="{{i+1}}" (click)="showQuestion(i)"
+                                    *ngIf="currQuestionIndex!=i" class="questionBtn">
+                            </td>
+                            <td>
+                                <input type="button" class="questionBtn" value="+" (click)="showAddQuestion()">
+                            </td>
+                            <td>
+                                <input type="button" class="questionBtn" value="-" (click)="deleteQuestion()"
+                                    *ngIf="newSurvey.questions.length!=0">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div *ngIf="addQuestionView">
+                    <table align="center">
+                        <tr>
+                            <td>
+                                <p>Tekst pitanja:</p>
+                            </td>
+                            <td>
+                                <textarea type="text" class="formInputs" name="tekstPitanja" #tekstPitanja='ngModel'
+                                    [(ngModel)]="newSurvey.questions[currQuestionIndex].question" rows="4" cols="30"
+                                    required></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Izaberite pitanje:</p>
+                            </td>
+                            <td>
+                                <select class="formInputs" name="tekstPonudjenihPitanja" #tekstPonudjenihPitanja='ngModel'
+                                    [(ngModel)]="newSurvey.questions[currQuestionIndex].question">
+                                    <option *ngFor=" let elem of allQuestions">{{elem.questionText}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Da li je pitanje obavezno:</p>
+                            </td>
+                            <td>
+                                <input type="checkbox" class="formInputs" value="false" name="obvz" #obvz='ngModel'
+                                    [(ngModel)]="newSurvey.questions[currQuestionIndex].isRequired">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Tip odgovora:</p>
+                            </td>
+                            <td>
+                                <select name="tipOdgovora" class="formInputs" #tipOdgovora='ngModel'
+                                    [(ngModel)]="newSurvey.questions[currQuestionIndex].type.name" required>
+                                    <option>number</option>
+                                    <option>text</option>
+                                    <option>text-area</option>
+                                    <option>radio</option>
+                                    <option>drop-list</option>
+                                    <option>checkbox</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr
+                            *ngIf='newSurvey.questions[currQuestionIndex].type.name=="text" || newSurvey.questions[currQuestionIndex].type.name=="number"'>
+                            <td>
+                                <p>Broj polja za odgovor:</p>
+                            </td>
+                            <td>
+                                <input type="number" class="formInputs" name="odgBr" #odgBr='ngModel'
+                                    [(ngModel)]="newSurvey.questions[currQuestionIndex].type.number" required>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div
+                        *ngIf='newSurvey.questions[currQuestionIndex].type.name!="text" && newSurvey.questions[currQuestionIndex].type.name!="text-area" &&  newSurvey.questions[currQuestionIndex].type.name!="" && newSurvey.questions[currQuestionIndex].type.name!="number" '>
+                        <table align="center">
+                            <tr>
+                                <td>
+                                    <p>Ogovori:</p>
+                                </td>
+                                <td
+                                    *ngFor="let answer of newSurvey.questions[currQuestionIndex].answers; let i = index">
+                                    <input type="button" value="{{i + 1}}" (click)="showAnswer(i)"
+                                        *ngIf="currAnswerIndex==i" class="questionBtnSelected">
+                                    <input type="button" value="{{i + 1}}" (click)="showAnswer(i)"
+                                        *ngIf="currAnswerIndex!=i" class="questionBtn">
+                                </td>
+                                <td>
+                                    <input type="button" class="questionBtn" value="+" (click)="showAddAnswer()">
+                                </td>
+                                <td>
+                                    <input type="button" class="questionBtn" value="-" (click)="deleteAnswer()"
+                                        *ngIf="newSurvey.questions[currQuestionIndex].answers.length!=0">
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div *ngIf="addAnswerView ">
+                            <table align="center">
+                                <tr>
+                                    <td>
+                                        <p>Teskt odgovora:</p>
+                                    </td>
+                                    <td>
+                                        <textarea type="text" class="formInputs" name="odg" #odg='ngModel'
+                                            [(ngModel)]="newSurvey.questions[currQuestionIndex].answers[currAnswerIndex]"
+                                            rows="4" cols="30" required></textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+       <!-- <div *ngIf="!formaAnketa.form.valid && submitted" align="center">
+            {{showMsg()}}
+        </div> -->
+
+    </div>
+</body>
+
+</html>

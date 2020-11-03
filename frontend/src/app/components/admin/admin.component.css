@@ -1,0 +1,129 @@
+body{
+    font-family: arial;
+    color: #333;
+}
+h1{
+    font-weight: normal;
+    margin: 20px auto;
+    text-align: center;
+    color: rgb(170, 165, 165);
+}
+form{
+    width: 500px;
+    margin: 20px auto;
+}
+.form{
+    display: block;
+    padding: 8px 16px;
+    font-size: 15px;
+    margin: 10px auto;
+    width: 50%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 3px solid #ccc;
+    outline: none !important;
+    color:  rgb(120, 178, 218);
+    background-color: rgba(233, 231, 231, 0.781);
+}
+::placeholder{
+    color: rgb(187, 181, 181);       
+}
+.form:focus{
+    border: 3px solid rgba(116, 191, 248, 0.801);
+}
+
+input[type=submit]:hover{
+    border: 3px solid rgba(116, 191, 248, 0.801);
+    cursor: pointer;
+}
+
+.select{
+    font-size: 17px;
+    margin: 10px auto;
+    height: 30px;
+    width: 200px;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    outline: none !important;
+    color:  rgb(120, 178, 218);
+    background-color: rgba(233, 231, 231, 0.781);
+  }
+
+select:invalid { 
+      color: rgb(187, 181, 181);
+}
+
+a {
+    font-weight: 600;
+    color: rgba(0, 143, 252, 0.801);
+}
+p{
+    font-family: arial;
+    color: rgba(0, 143, 252, 0.801);
+}
+
+.mainBtn{
+    font-size: 15px;
+    margin: 10px auto;
+    width: 50%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 3px solid #ccc;
+    outline: none !important;
+    color:  rgb(120, 178, 218);
+    background-color: rgba(233, 231, 231, 0.781);
+}
+.mainBtn:hover{
+    border: 3px solid rgba(116, 191, 248, 0.801);
+    cursor: pointer;
+}
+
+.users{
+    margin: 10px auto;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    outline: none !important;
+    color:  rgb(82, 124, 151);
+    background-color: rgba(233, 231, 231, 0.781);
+}
+.users:hover{
+    border: 3px solid rgba(116, 191, 248, 0.801);
+}
+
+.selectUsers{
+    margin: 10px auto;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    outline: none !important;
+    color:  rgb(82, 124, 151);
+    background-color: rgba(233, 231, 231, 0.781);
+}
+.selectUsers:hover{
+    border: 3px solid rgba(116, 191, 248, 0.801);
+}
+
+.btn{
+    margin: 10px auto;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    outline: none !important;
+    color:   rgb(82, 124, 151);
+    background-color: rgba(233, 231, 231, 0.781);
+}
+.btn:hover{
+    border: 3px solid rgba(116, 191, 248, 0.801);
+    cursor: pointer;
+}
+.btnReq{
+    margin: 10px auto;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 3px solid #ccc;
+    outline: none !important;
+    color:  rgb(120, 178, 218);
+    background-color: rgba(233, 231, 231, 0.781);
+}
+.btnReq:hover{
+    border: 3px solid rgba(116, 191, 248, 0.801);
+    cursor: pointer;
+}

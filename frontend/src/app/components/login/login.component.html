@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Login Form</title>
+</head>
+
+<body>
+    <h1>PRIJAVA</h1>
+    <form style="display: inline-block;" #loginForm='ngForm' (ngSubmit)="loginForm.form.valid && login()">
+
+        <input type="text" placeholder="Korisnicko ime" name="korime" [(ngModel)]="username" #korime='ngModel' (click)='message=""' required>
+        <p *ngIf="loginForm.submitted && korime.invalid">Niste uneli korisnicko ime</p>
+
+        <input type="password" placeholder="Lozinka" name="lozinka" [(ngModel)]="password" #lozinka='ngModel' (click)='message=""' required>
+        <p *ngIf="loginForm.submitted && lozinka.invalid">Niste uneli lozinku</p>
+
+        <input type="submit" class="btn" value="PRIJAVA">
+
+        {{message}}
+
+    </form>
+
+    <br>
+    <br>
+    <div style="text-align: center;">
+        <a routerLink="/register">Registracija</a>
+    </div>
+</body>
+
+</html>

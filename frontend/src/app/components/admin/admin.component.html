@@ -1,0 +1,221 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <h1>
+        Administrator: {{app.currUser.username}}
+    </h1>
+    <p> {{msg}} </p>
+    <br>
+    <div style="display: inline-block;">
+        <input type="button" class="mainBtn" name="btn1" value="PRIKAZI SVE KORISNIKE" (click)="showUsers()">
+        <input type="button" class="mainBtn" value="PRIKAZI SVE ZAHTEVE" (click)="showRequests()">
+        <input type="button" class="mainBtn" value="DODAJ NOVOG KORISNIKA" (click)="showAddUser()">
+    </div>
+    <br>
+
+    <div *ngIf="userViews==true">
+        <br>
+        <br>
+        <table align="center" *ngIf="!usersEmpty">
+            <caption><b>Korisnici u sitemu</b></caption>
+            <tr>
+                <th>Ime</th>
+                <th>Prezime</th>
+                <th>Korisnicko ime</th>
+                <th>Lozinka</th>
+                <th>Datum rodjenja</th>
+                <th>Mesto rodjenja</th>
+                <th>JMBG</th>
+                <th>Kontakt telefon</th>
+                <th>Mejl</th>
+                <th>Tip</th>
+            </tr>
+            <tr *ngFor=" let user of users" >
+                <td *ngIf="user!=null">
+                    <input type="text" class="users" name="ime" [(ngModel)]="user.name" #ime='ngModel' (click)='msg=""' size="10">
+                </td>
+                <td *ngIf="user!=null">
+                    <input type="text" class="users" name="prezime" [(ngModel)]="user.surname" #prezime='ngModel' (click)='msg=""' size="10">
+                </td>
+                <td *ngIf="user!=null">
+                    <input type="text" class="users" name="korime" [(ngModel)]="user.username" #korime='ngModel' (click)='msg=""' size="10">
+                </td>
+                <td *ngIf="user!=null">
+                    <input type="text" class="users" name="lozinka" [(ngModel)]="user.password" #lozinka='ngModel' (click)='msg=""' size="10">
+                </td>
+                <td *ngIf="user!=null">
+                    <input type="text" class="users" name="datum_rodjenja" [(ngModel)]="user.birth_date" #datum_rodjenja='ngModel' (click)='msg=""'
+                        size="15">
+                </td>
+                <td *ngIf="user!=null">
+                    <input type="text" class="users" name="mesto_rodjenja" [(ngModel)]="user.birth_place" #mesto_rodjenja='ngModel' (click)='msg=""'
+                        size="10">
+                </td>
+                <td *ngIf="user!=null">
+                    <input type="text" class="users" name="jmbg" [(ngModel)]="user.id" #jmbg='ngModel' (click)='msg=""' size="10">
+                </td>
+                <td *ngIf="user!=null">
+                    <input type="text" class="users" name="telefon" [(ngModel)]="user.phone" #telefon='ngModel' (click)='msg=""' size="10">
+                </td>
+                <td *ngIf="user!=null">
+                    <input type="email" class="users" name="mejl" [(ngModel)]="user.mail" #mejl='ngModel' (click)='msg=""' size="15">
+                </td>
+                <td *ngIf="user!=null">
+                    <select name="tip" class="selectUsers" [(ngModel)]="user.type" #tip='ngModel' (click)='msg=""'>
+                        <option>admin</option>
+                        <option>client</option>
+                        <option>author</option>
+                    </select>
+                </td>
+                <td *ngIf="user!=null">
+                    <input type="button" class="btn" value="OBRISI" (click)="deleteUser(user.username)">
+                </td>
+                <td *ngIf="user!=null">
+                    <input type="button" class="btn" value="AZURIRAJ" (click)="updateUser(user)">
+                </td>
+            </tr>
+        </table>
+        <p *ngIf="usersEmpty">Vi ste jedini korisnik</p>
+    </div>
+
+
+    <div *ngIf="requestViews==true">
+        <br>
+        <br>
+        <table align="center" *ngIf="!requestsEmpty">
+            <caption><b>Zahtevi za registraciju</b></caption>
+            <tr>
+                <th>Ime</th>
+                <th>Prezime</th>
+                <th>Korisnicko ime</th>
+                <th>Lozinka</th>
+                <th>Datum rodjenja</th>
+                <th>Mesto rodjenja</th>
+                <th>JMBG</th>
+                <th>Kontakt telefon</th>
+                <th>Mejl</th>
+                <th>Tip</th>
+            </tr>
+            <tr *ngFor=" let request of requests">
+                <td *ngIf="request!=null">
+                    <p>{{request.name}}</p>
+                </td>
+                <td *ngIf="request!=null">
+                    <p>{{request.surname}}</p>
+                </td>
+                <td *ngIf="request!=null">
+                    <p>{{request.username}}</p>
+                </td>
+                <td *ngIf="request!=null">
+                    <p>{{request.password}}</p>
+                </td>
+                <td *ngIf="request!=null">
+                    <p>{{request.birth_date}}</p>
+                </td>
+                <td *ngIf="request!=null">
+                    <p>{{request.birth_place}}</p>
+                </td>
+                <td *ngIf="request!=null">
+                    <p>{{request.id}}</p>
+                </td>
+                <td *ngIf="request!=null">
+                    <p>{{request.phone}}</p>
+                </td>
+                <td *ngIf="request!=null">
+                   <p> {{request.mail}}</p>
+                </td>
+                <td *ngIf="request!=null">
+                    <p>{{request.type}}</p>
+                </td>
+                <td *ngIf="request!=null">
+                    <input type="button" class="btnReq" value="ODOBRI" (click)="approveRequest(request.username)">
+                </td>
+                <td *ngIf="request!=null">
+                    <input type="button" class="btnReq" value="ODBIJ" (click)="denyRequest(request.username)">
+                </td>
+            </tr>
+        </table>
+        <p *ngIf="requestsEmpty">Trenutno nema zahteva</p>
+    </div>
+
+
+
+    <form style="display: inline-block" #formAddUser='ngForm' *ngIf="addUserView==true"
+        (ngSubmit)="formAddUser.form.valid && addUser()">
+        <input type="text" class="form" placeholder="Ime" name="ime" [(ngModel)]="newUser.name" #ime='ngModel'
+            (click)='msg=""' required>
+        <p *ngIf="formAddUser.submitted && ime.invalid">
+            Morate uneti ime
+        </p>
+
+        <input type="text" class="form" placeholder="Prezime" name="prezime" [(ngModel)]="newUser.surname"
+            #prezime='ngModel' (click)='msg=""' required>
+        <p *ngIf="formAddUser.submitted && prezime.invalid">
+            Morate uneti prezime
+        </p>
+
+        <input type="text" class="form" placeholder="Korisnicko ime" name="korime" [(ngModel)]="newUser.username"
+            #korime='ngModel' (click)='msg=""' required>
+        <p *ngIf="formAddUser.submitted && korime.invalid">
+            Morate uneti korisnicko ime
+        </p>
+
+        <input type="password" class="form" placeholder="Lozinka" name="lozinka" [(ngModel)]="newUser.password"
+            #lozinka='ngModel' pattern="^([a-zA-Z].*)(?=.*[0-9])(?=.*[A-Z])(?=.*\W).{7,}$" (click)='msg=""' required>
+        <p *ngIf="formAddUser.submitted && lozinka.invalid">
+            <span *ngIf="lozinka.errors.pattern">Nije dobar patern</span>
+            <span *ngIf="!lozinka.errors.pattern">Morate uneti lozinku</span>
+        </p>
+
+        <input type="date" class="form" name="datum_rodjenja" [(ngModel)]="newUser.birth_date" #datum_rodjenja='ngModel'
+            (click)='msg=""' required>
+        <p *ngIf="formAddUser.submitted && datum_rodjenja.invalid">
+            Morate uneti datum rodjenja
+        </p>
+
+        <input type="text" class="form" placeholder="Mesto rodjenja" name="mesto_rodjenja"
+            [(ngModel)]="newUser.birth_place" #mesto_rodjenja='ngModel' (click)='msg=""' required>
+        <p *ngIf="formAddUser.submitted && mesto_rodjenja.invalid">
+            Morate uneti mesto rodjenja
+        </p>
+
+        <input type="text" class="form" placeholder="JMBG" name="jmbg" [(ngModel)]="newUser.id" #jmbg='ngModel'
+            pattern="^([0-2]\d|3[0,1])(0\d|1[0,1,2])(\d{9})$" (click)='msg=""' required>
+        <p *ngIf="formAddUser.submitted && jmbg.invalid">
+            <span *ngIf="!jmbg.errors.pattern">Morate uneti JMBG</span>
+            <span *ngIf="jmbg.errors.pattern">Pogresan format</span>
+        </p>
+
+        <input type="string" class="form" placeholder="Kontakt telefon" name="telefon" [(ngModel)]="newUser.phone"
+            #telefon='ngModel' pattern="^(\d{9}\d?\d?$)|(\+381\d{8}\d?\d?$)" (click)='msg=""' required>
+        <p *ngIf="formAddUser.submitted && telefon.invalid">
+            Morate uneti kontakt telefon
+        </p>
+
+        <input type="email" class="form" placeholder="E-mail" name="mejl" [(ngModel)]="newUser.mail" #mejl='ngModel'
+            (click)='msg=""' required>
+        <p *ngIf="formAddUser.submitted && mejl.invalid">
+            Morate uneti e-mail
+        </p>
+
+        <select name="tip" class="select" #tip='ngModel' [(ngModel)]="newUser.type" required>
+            <option value="" disabled selected hidden>Tip</option>
+            <option>admin</option>
+            <option>client</option>
+            <option>author</option>
+        </select>
+        <p *ngIf="formAddUser.submitted && tip.invalid">
+            Morate izabrati tip
+        </p>
+
+        <input type="submit" class="form" value="SNIMI">
+
+    </form>
+
+</body>
+
+</html>
