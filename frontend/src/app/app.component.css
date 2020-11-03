@@ -1,0 +1,65 @@
+.menu {
+    background-color: rgba(181, 214, 240, 0.801);
+    overflow: hidden;
+    font-family: Arial;
+  }
+  
+  .menu #home {
+    float: left;
+    color: #868686a6;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+  }
+  .menu #home:hover {
+    background-color: white;
+    color: rgb(165, 214, 252);
+  }
+  
+
+  .menu #passChange {
+    float: right;
+    color: #868686a6;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+  }
+  .menu #passChange:hover {
+    background-color: white;
+    color: rgb(165, 214, 252);
+  }
+  
+
+  .menu #logout {
+    float: right;
+    color: #868686a6;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+  }
+  .menu #logout:hover {
+    background-color: white;
+    color: rgb(165, 214, 252);
+  }
+
+  .menu #username{
+      float: left;
+      color: #868686a6;
+      padding: 14px 16px;
+      text-align: center;
+      font-size: 20px;
+  }
+  .menu #title{
+    float: left;
+    color: #868686a6;
+    padding: 14px 16px;
+    text-align: center;
+    font-size: 20px;
+  }
+
+.hrClass{
+  color: rgb(165, 214, 252);
+}
